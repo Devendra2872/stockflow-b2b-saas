@@ -212,8 +212,6 @@ API responses are JSON-formatted with consistent status codes.
 Real-time stock updates supported through transactional updates or WebSocket feeds.
 
 
-
-* Summary
 .Code Review :-
 Fixed data validation, atomicity, and business rule issues
 
