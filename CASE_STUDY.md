@@ -1,10 +1,10 @@
- CASE STUDY – StockFlow (B2B Inventory Management System)
+*CASE STUDY – StockFlow (B2B Inventory Management System)
 
 Author: Devendra Patil
 Tech Stack: Java, Spring Boot, Spring Data JPA, MySQL
-Time Allocation: 90 minutes (Take-home)
 
-Part 1: Code Review & Debugging
+
+*Part 1: Code Review & Debugging
  Issues Identified
 
 No SKU Uniqueness Check
@@ -31,7 +31,8 @@ Prices should allow decimal values but were not validated or normalized.
 No Response Standardization
 Error and success responses aren’t consistent or informative.
 
-Fixed Logic Summary
+
+*Fixed Logic Summary
 
 Added transaction management to ensure atomic writes.
 
@@ -49,7 +50,7 @@ Used consistent and descriptive response messages.
 
 
 
-Part 2: Database Design
+*Part 2: Database Design
 Proposed Schema (Conceptual)
 
 Companies – Each company using StockFlow.
@@ -69,7 +70,7 @@ ProductThresholds – Defines low-stock levels per product.
 InventoryAudit – Logs every stock level change (increases/decreases).
 
 
-Key Design Decisions
+*Key Design Decisions
 
 Normalization: Reduced data duplication and ensured scalability.
 
@@ -86,7 +87,7 @@ Threshold Configuration: Made configurable per product to support custom alerts.
 
 
 
-Questions for Product Team
+*Questions for Product Team
 
 Should low-stock thresholds vary by warehouse or remain global per product?
 
@@ -103,7 +104,7 @@ How frequently should alerts be recalculated — real-time or scheduled?
 
 
 
-Design Rationale :-
+*Design Rationale :-
 
 The schema is optimized for read-heavy operations (like reporting and alerting).
 
@@ -115,7 +116,7 @@ Schema supports future scalability (multi-company, multi-supplier environment).
 
 
 
-Part 3: API Implementation – Low Stock Alerts
+*Part 3: API Implementation – Low Stock Alerts
  Business Rules
 
 Low-stock threshold varies by product type.
@@ -130,7 +131,7 @@ Must gracefully handle missing data (no supplier, unknown threshold).
 
 
 
-Expected Behavior :-
+*Expected Behavior :-
 
 For each company, gather all products stored in its warehouses.
 
@@ -146,7 +147,7 @@ Return a list of all low-stock items with total count.
 
 
 
-Response Structure :-
+*Response Structure :-
 
 Each alert entry should include:
 
@@ -163,7 +164,7 @@ Supplier contact info
 
 
 
-Edge Cases Considered :-
+*Edge Cases Considered :-
 
 Missing or undefined threshold → use a default (e.g., 10 units).
 
@@ -178,7 +179,7 @@ Transaction or DB errors → handled gracefully with meaningful messages.
 
 
 
-Approach Summary :-
+*Approach Summary :-
 
 Data Aggregation: Join product, inventory, and threshold data for each warehouse.
 
@@ -194,7 +195,9 @@ Preload thresholds and suppliers to avoid N+1 queries.
 
 Scalability: Can later move alert computation to a background job or cron task.
 
-Assumptions
+
+
+*Assumptions
 
 “Recent sales activity” means sales within the last 30 days.
 
@@ -210,12 +213,20 @@ Real-time stock updates supported through transactional updates or WebSocket fee
 
 
 
-Summary
+* Summary
+.Code Review :-
+Fixed data validation, atomicity, and business rule issues
 
-Category	         Key Points
-Code Review	         Fixed data validation, atomicity, and business rule issues
-Database             Design	Normalized schema with scalable relationships
-API Design	         Clear rules for low-stock detection and supplier inclusion
-Edge Handling	     Robust handling for missing or partial data
-Scalability	         Supports multi-company, multi-warehouse setup
-Maintainability	     Clear separation between product, inventory, and audit layers
+.Database :-
+Design	Normalized schema with scalable relationships
+
+.API Design	:-
+Clear rules for low-stock detection and supplier inclusion
+
+.Edge Handling :-
+Robust handling for missing or partial data
+.Scalability :-
+Supports multi-company, multi-warehouse setup
+
+.Maintainability	:-
+Clear separation between product, inventory, and audit layers
